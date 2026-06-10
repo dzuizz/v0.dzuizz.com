@@ -16,7 +16,7 @@ body {
       <div>{% for yearly in achievements %}
         <b>{{ yearly.year }} - {{ yearly.grade }}</b>
         {% for item in yearly['items'] %}<ul>
-          <li>{{ item.title }}{{ ' ('~abbrev[item.title]~')' if abbrev[item.title] else "" }} <i>{{ item.ranking }}</i>: {{ item.award }} <a href={{ "static/certs"~item.filename }}>view cert.</a></li>
+          <li>{{ item.title }}{{ ' ('~abbrev[item.title]~')' if abbrev[item.title] else "" }} <i>{{ item.ranking }}</i>: {{ item.award }} <a href={{ "certs"~item.filename }}>view cert.</a></li>
         </ul>{% endfor %}
       {% endfor %}</div>
     </section>
