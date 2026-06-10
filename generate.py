@@ -16,13 +16,14 @@ def main() -> None:
     OUTPUT_DIR.mkdir()
     shutil.copytree("data/certs", OUTPUT_DIR / "certs")
 
+    content = load("data/content.json")
     abbrev, achievements = load("data/abbrev.json"), load("data/achievements.json")
 
     env = Environment(loader=FileSystemLoader("input"))
     index_html = env.get_template("index.html.j2")
 
     print(abbrev, achievements[0]["items"])
-    output = index_html.render(abbrev=abbrev, achievements=achievements)
+    output = index_html.render(**content, abbrev=abbrev, achievements=achievements)
     Path("output/index.html").write_text(output)
 
 
