@@ -1,4 +1,28 @@
 {
   "title": "dzuizz",
-  "about": "hey, its dzuizz."
+  "name": "ahmad dzuizz annajib",
+  "tagline": "competitive programmer",
+  "role": "student @ nus high school of math and science",
+  "location": "SGP / IDN",
+  "about": "making things happen",
+  "projects": [
+    {
+      "kind": "website",
+      "year": "2024",
+      "name": "dzuizz.com",
+      "description": "personal portfolio",
+      "stack": ["TypeScript"],
+      "url": "https://github.com/dzuizz/my-app",
+      "link_text": "github"
+    },
+    {
+      "kind": "tool",
+      "year": "2026",
+      "name": "graphide",
+      "description": "graph visualiser",
+      "stack": ["HTML"],
+      "url": "https://github.com/dzuizz/graphide",
+      "link_text": "github"
+    }
+  ]
 }

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{{ title }}</title>
+    <meta name="description" content="{{ tagline | default(title) }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -9,27 +12,224 @@
       rel="stylesheet"
     />
     <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      :root {
+        --paper: #f4f0e8;
+        --card: #fdfcf8;
+        --ink: #1b1917;
+        --muted: #7c766d;
+        --hairline: #e2dcd0;
+        --clay: #c97b5a;
+        --ochre: #dfb863;
+        --sage: #a2af93;
+        --slate: #8ca3b8;
+        --gold: #8f6408;
+        --silver: #6f6960;
+        --bronze: #a05b36;
+        --platinum: #5b6e81;
+
+        --gap: 0.7rem;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #191715;
+          --card: #211e1b;
+          --ink: #f0ece4;
+          --muted: #9c948a;
+          --hairline: #35302a;
+
+          --gold: var(--ochre);
+          --silver: #b9b2a8;
+          --bronze: var(--clay);
+          --platinum: var(--slate);
+        }
+      }
+
+      html {
+        background: var(--paper);
+      }
+
       body {
         font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+        font-synthesis: none;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: var(--paper);
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 2.25rem 1.1rem 3rem;
+        line-height: 1.45;
+        position: relative;
+        z-index: 1;
+      }
+
+      .wash {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .wash span {
+        position: absolute;
+        display: block;
+        border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+        filter: blur(30px);
+        opacity: 0.35;
+      }
+      .wash span:nth-child(1) {
+        width: 280px;
+        height: 220px;
+        top: -70px;
+        left: -90px;
+        background: var(--clay);
+      }
+      .wash span:nth-child(2) {
+        width: 240px;
+        height: 260px;
+        top: 30%;
+        right: -120px;
+        background: var(--ochre);
+      }
+      .wash span:nth-child(3) {
+        width: 300px;
+        height: 200px;
+        bottom: 4%;
+        left: -130px;
+        background: var(--sage);
+      }
+      @media (prefers-color-scheme: dark) {
+        .wash span {
+          opacity: 0.14;
+        }
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 2px;
+        padding: 1rem 1.15rem;
+      }
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: lowercase;
+      }
+      .meta .code {
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: var(--muted);
+      }
+
+      .intro {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.15rem;
+        align-items: start;
+      }
+      .intro:has(img) {
+        grid-template-columns: 120px 1fr;
+      }
+      .intro img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border: 1px solid var(--hairline);
+        border-radius: 2px;
+        display: block;
+      }
+      .name {
+        font-size: clamp(1.55rem, 4.5vw, 1.9rem);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        text-transform: lowercase;
+        margin: 0.7rem 0 0.15rem;
+      }
+      .tagline {
+        color: var(--muted);
+        margin: 0 0 0.5rem;
+      }
+      .bio {
+        margin: 0 0 0.7rem;
+      }
+
+      .contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.9rem;
+        margin: 0;
+        padding: 0.6rem 0 0;
+        border-top: 1px solid var(--hairline);
+        list-style: none;
+        font-size: 0.875rem;
+      }
+
+      @media (max-width: 620px) {
+        .intro {
+          grid-template-columns: 1fr;
+          gap: 0.85rem;
+        }
+        .intro img {
+          max-width: 120px;
+        }
+      }
+
+      h2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: lowercase;
+        margin: 1.5rem 0 0.55rem;
+        padding: 0 0.15rem 0.4rem;
+        border-bottom: 1px solid var(--hairline);
+      }
+      h2 .count {
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .years {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap);
       }
       .timeline {
         list-style: none;
-        margin: 0.5em 0 1.5em;
+        margin: 0.6rem 0 0;
         padding: 0;
       }
       .timeline li {
         position: relative;
-        padding: 0 0 0.6em 1.4em;
+        padding: 0 0 0.5em 1.4em;
+      }
+      .timeline li:last-child {
+        padding-bottom: 0;
       }
       .timeline li::before {
         content: "";
         position: absolute;
         left: 0;
-        top: 0.45em;
-        width: 9px;
-        height: 9px;
+        top: 0.46em;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
-        background: #111;
+        background: var(--clay);
         z-index: 1;
       }
       .timeline li::after {
@@ -38,37 +238,238 @@
         left: 3.5px;
         top: 0;
         bottom: 0;
-        width: 2px;
-        background: #ccc;
+        width: 1px;
+        background: var(--hairline);
       }
       .timeline li:first-child::after {
-        top: 0.45em;
+        top: 0.46em;
       }
       .timeline li:last-child::after {
         bottom: auto;
-        height: 0.45em;
+        height: 0.46em;
+      }
+      .timeline .award {
+        font-weight: 700;
+      }
+      .award.gold {
+        color: var(--gold);
+      }
+      .award.silver {
+        color: var(--silver);
+      }
+      .award.bronze {
+        color: var(--bronze);
+      }
+      .award.platinum {
+        color: var(--platinum);
+      }
+      .timeline .rank {
+        font-size: 0.8em;
+        font-weight: 700;
+        color: var(--ink);
+        background: var(--paper);
+        border: 1px solid var(--hairline);
+        border-radius: 2px;
+        padding: 0.05em 0.4em;
+      }
+
+      .projects {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--gap);
+      }
+      .projects .card {
+        display: flex;
+        flex-direction: column;
+      }
+      .project-name {
+        font-size: 1.05rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-transform: lowercase;
+        margin: 0.55rem 0 0.3rem;
+      }
+      .project-desc {
+        margin: 0 0 0.6rem;
+      }
+      .project-stack {
+        font-size: 0.8125rem;
+        color: var(--muted);
+        margin: 0 0 0.6rem;
+      }
+      .project-link {
+        margin: auto 0 0;
+      }
+      @media (max-width: 620px) {
+        .projects {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      a {
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--clay);
+        font-weight: 500;
+      }
+      a:hover {
+        background: var(--clay);
+        color: var(--card);
+        border-bottom-color: transparent;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--clay);
+        outline-offset: 2px;
+      }
+      .cert {
+        font-size: 0.8125rem;
+        border-bottom-color: var(--hairline);
+        color: var(--muted);
+      }
+
+      @media print {
+        .wash {
+          display: none;
+        }
+        html,
+        body {
+          background: #fff;
+          color: #000;
+          font-size: 10.5pt;
+          max-width: none;
+          padding: 0;
+        }
+        .card {
+          background: none;
+          border-color: #bbb;
+          break-inside: avoid;
+        }
+        a {
+          border-bottom: none;
+          text-decoration: underline;
+        }
+        .project-link a::after,
+        .contact a::after {
+          content: " (" attr(href) ")";
+          font-size: 8pt;
+          color: #555;
+        }
       }
     </style>
   </head>
   <body>
+    <div class="wash" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
     <main>
-      <section id="about">{{ about }}</section>
+      <section id="about" class="card">
+        <div class="intro">
+          {% if photo %}
+            <img src="{{ photo }}" alt="portrait of {{ name }}" />
+          {% endif %}
+          <div>
+            <div class="meta">
+              <span>{{ role | default('portfolio') }}</span>
+              <span class="code">{{ location | default('') }}</span>
+            </div>
+            <h1 class="name">{{ name }}</h1>
+            {% if tagline %}<p class="tagline">{{ tagline }}</p>{% endif %}
+            <p class="bio">{{ about }}</p>
+            {% if contacts %}
+              <ul class="contact">
+                {% for c in contacts %}
+                  <li>
+                    <a
+                      href="{{ c.url }}"
+                      {{ ' target="_blank" rel="noopener"' if c.url.startswith('http') else '' }}
+                      >{{ c.label }}</a
+                    >
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+
+      {%
+        set award_class = {
+          'GOLD': 'gold', 'FIRST PRIZE': 'gold', 'PERFECT SCORE': 'gold',
+          'SILVER': 'silver', 'PERAK': 'silver',
+          'BRONZE': 'bronze', 'THIRD PRIZE': 'bronze',
+          'PLATINUM': 'platinum'
+        }
+      %}
       <section id="achievements">
-        <div>
+        <h2>
+          achievements
+          <span class="count">across {{ achievements | length }} years</span>
+        </h2>
+        <div class="years">
           {% for yearly in achievements %}
-            <b>{{ yearly.year }} - {{ yearly.grade }}</b>
-            <ul class="timeline">
-              {% for item in yearly['items'] %}
-                <li>
-                  {{ item.title }}{{ ' ('~abbrev[item.title]~')' if abbrev[item.title] else "" }}
-                  <i>{{ item.ranking }}</i>: {{ item.award }}
-                  <a href="{{ "certs"~item.filename }}">view cert.</a>
-                </li>
-              {% endfor %}
-            </ul>
+            <div class="card">
+              <div class="meta">
+                <span>{{ yearly.year }}</span>
+                <span class="code">{{ yearly.grade }}</span>
+              </div>
+              <ul class="timeline">
+                {% for item in yearly['items'] %}
+                  <li>
+                    <span class="award {{ award_class.get(item.award, '') }}"
+                      >{{ item.award }}</span
+                    >
+                    {% if item.ranking %}
+                      <span class="rank">{{ item.ranking }}</span>
+                    {% endif %}
+                    —
+                    {{ item.title }}{{ ' ('~abbrev[item.title]~')' if abbrev[item.title] else "" }}
+                    <a
+                      class="cert"
+                      href="{{ "certs"~item.filename }}"
+                      target="_blank"
+                      rel="noopener"
+                      aria-label="view certificate for {{ item.title }}"
+                      >view cert.</a
+                    >
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
           {% endfor %}
         </div>
       </section>
+
+      {% if projects %}
+        <section id="projects">
+          <h2>
+            projects
+            <span class="count">{{ projects | length }}</span>
+          </h2>
+          <div class="projects">
+            {% for project in projects %}
+              <article class="card">
+                <div class="meta">
+                  <span>{{ project.kind }}</span>
+                  <span class="code">{{ project.year }}</span>
+                </div>
+                <h3 class="project-name">{{ project.name }}</h3>
+                <p class="project-desc">{{ project.description }}</p>
+                {% if project.stack %}
+                  <p class="project-stack">{{ project.stack | join(' · ') }}</p>
+                {% endif %}
+                {% if project.url %}
+                  <p class="project-link">
+                    <a href="{{ project.url }}" target="_blank" rel="noopener"
+                      >{{ project.link_text | default('visit') }}</a
+                    >
+                  </p>
+                {% endif %}
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
     </main>
   </body>
 </html>
