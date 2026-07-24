@@ -300,6 +300,14 @@
       .project-link {
         margin: auto 0 0;
       }
+      .project-link a {
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 0.3em 0.8em;
+        border: 1px solid var(--ink);
+        border-radius: 2px;
+      }
       @media (max-width: 620px) {
         .projects {
           grid-template-columns: 1fr;
@@ -320,6 +328,9 @@
       a:focus-visible {
         outline: 2px solid var(--clay);
         outline-offset: 2px;
+      }
+      a[target="_blank"]::after {
+        content: "\00a0↗";
       }
       .cert {
         font-size: 0.8125rem;

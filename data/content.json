@@ -21,8 +21,8 @@
       "name": "graphide",
       "description": "graph visualiser",
       "stack": ["HTML"],
-      "url": "https://github.com/dzuizz/graphide",
-      "link_text": "github"
+      "url": "https://dzuizz.github.io/graphide/",
+      "link_text": "try it live"
     }
   ]
 }
