@@ -424,14 +424,16 @@
                     {% endif %}
                     —
                     {{ item.title }}{{ ' ('~abbrev[item.title]~')' if abbrev[item.title] else "" }}
-                    <a
-                      class="cert"
-                      href="{{ "certs"~item.filename }}"
-                      target="_blank"
-                      rel="noopener"
-                      aria-label="view certificate for {{ item.title }}"
-                      >view cert.</a
-                    >
+                    {% if item.filename %}
+                      <a
+                        class="cert"
+                        href="certs/{{ item.filename }}"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="view certificate for {{ item.title }}"
+                        >view cert.</a
+                      >
+                    {% endif %}
                   </li>
                 {% endfor %}
               </ul>
